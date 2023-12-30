@@ -1,20 +1,13 @@
 from django import forms
 from django.contrib.contenttypes.models import ContentType
-from .models import ManagedStringProject, GitHubSource, FileUploadSource
+from .models import ManagedStringProject
 
 class ProjectAdminForm(forms.ModelForm):
-    SOURCE_TYPE_CHOICES = (
-        ('', '---------'),
-        ('github', 'GitHub'),
-        ('file_upload', 'File Upload'),
-    )
-    source_type = forms.ChoiceField(choices=SOURCE_TYPE_CHOICES, required=False)
-
-
+    
     class Meta:
         model = ManagedStringProject
         fields = '__all__'
-        readonly_fields = ('source_content_type', 'source_object_id',)
+        readonly_fields = ('project_id')
         # exclude = ('source_content_type', 'source_object_id') 
 
     def clean(self):
@@ -27,30 +20,4 @@ class ProjectAdminForm(forms.ModelForm):
 
         return cleaned_data
     
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-
-        source_type = self.cleaned_data.get('source_type')
-
-        # Logic to handle the source type
-        if source_type == 'github':
-            # Adjust this logic as needed
-            github_source, created = GitHubSource.objects.get_or_create(
-                project=instance,
-                defaults={'repository_url': 'Default URL'}
-            )
-            instance.source_content_type = ContentType.objects.get_for_model(GitHubSource)
-            instance.source_object_id = github_source.pk
-
-        elif source_type == 'file_upload':
-            # Adjust this logic as needed
-            file_upload_source, created = FileUploadSource.objects.get_or_create(
-                project=instance,
-                defaults={'file': None}
-            )
-            instance.source_content_type = ContentType.objects.get_for_model(FileUploadSource)
-            instance.source_object_id = file_upload_source.pk
-
-        if commit:
-            instance.save()
-        return instance
+   
