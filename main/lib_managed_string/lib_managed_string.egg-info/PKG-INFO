@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: lib-managed-string
+Version: 0.1
+Summary: A simple django library to manage strings
+Author: Ankit
+
+Django library to manage strings

@@ -1,0 +1,2 @@
+install local pip
+    pip install -e .

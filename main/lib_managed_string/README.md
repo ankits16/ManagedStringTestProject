@@ -1,0 +1,1 @@
+Django library to manage strings

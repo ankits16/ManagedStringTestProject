@@ -1,0 +1,1 @@
+default_app_config = 'lib_managed_string.managed_string_project.apps.ManagedProjectsConfig'

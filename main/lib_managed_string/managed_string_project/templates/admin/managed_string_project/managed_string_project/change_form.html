@@ -1,0 +1,25 @@
+{% extends "admin/change_form.html" %}
+{% block extrahead %}
+    {{ block.super }}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function toggleCustomProjectType() {
+                // Change 'id_project_type' to the actual ID of your project_type field
+                var projectType = document.getElementById('id_project_type');
+                var customTypeDiv = document.getElementById('id_custom_project_type').closest('.form-row');
+
+                if (projectType.value === 'Others') {
+                    customTypeDiv.style.display = '';
+                } else {
+                    customTypeDiv.style.display = 'none';
+                }
+            }
+
+            // Bind the function to the change event of the project_type field
+            document.getElementById('id_project_type').addEventListener('change', toggleCustomProjectType);
+
+            // Call the function to set the initial state
+            toggleCustomProjectType();
+        });
+    </script>
+{% endblock %}

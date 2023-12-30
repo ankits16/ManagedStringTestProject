@@ -1,0 +1,13 @@
+README.md
+setup.py
+lib_managed_string.egg-info/PKG-INFO
+lib_managed_string.egg-info/SOURCES.txt
+lib_managed_string.egg-info/dependency_links.txt
+lib_managed_string.egg-info/top_level.txt
+managed_string_project/__init__.py
+managed_string_project/admin.py
+managed_string_project/apps.py
+managed_string_project/forms.py
+managed_string_project/models.py
+managed_string_project/migrations/0001_initial.py
+managed_string_project/migrations/__init__.py
