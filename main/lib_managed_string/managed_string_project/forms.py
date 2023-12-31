@@ -54,3 +54,8 @@ class ProjectAdminForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+    
+class FileUploadSourceForm(forms.ModelForm):
+    class Meta:
+        model = FileUploadSource
+        fields = '__all__' 

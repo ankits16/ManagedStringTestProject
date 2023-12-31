@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'lib_managed_string.managed_string_project',
+    'nested_admin',
 ]
 
 MIDDLEWARE = [
