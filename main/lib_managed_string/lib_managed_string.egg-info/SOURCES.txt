@@ -6,6 +6,7 @@ lib_managed_string.egg-info/dependency_links.txt
 lib_managed_string.egg-info/top_level.txt
 managed_string_project/__init__.py
 managed_string_project/admin.py
+managed_string_project/admin_inlines.py
 managed_string_project/apps.py
 managed_string_project/forms.py
 managed_string_project/models.py

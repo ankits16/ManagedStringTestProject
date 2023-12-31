@@ -21,8 +21,8 @@ class ManagedStringProject(models.Model):
     custom_project_type = models.CharField(max_length=100, blank=True, null=True)
 
     # Fields for the generic relation
-    source_content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    source_object_id = models.PositiveIntegerField()
+    source_content_type = models.ForeignKey(ContentType, null=True, on_delete=models.CASCADE)
+    source_object_id = models.PositiveIntegerField(null=True)
     source = GenericForeignKey('source_content_type', 'source_object_id')
 
 
@@ -31,7 +31,7 @@ class ManagedStringProject(models.Model):
     
 
 class ProjectStringSource(models.Model):
-    
+    source_id = models.UUIDField(default=uuid.uuid4, editable=False)
     project = models.ForeignKey(ManagedStringProject, on_delete=models.CASCADE)
     source_type = models.CharField(max_length=50, editable=False)
 
@@ -53,12 +53,24 @@ class GitHubSource(ProjectStringSource):
 # Function to generate the upload path
 def project_string_source_upload_path(instance, filename):
     # Generate the path based on project_id
-    return os.path.join('project_string_sources', str(instance.project.project_id), filename)
+    return os.path.join(
+        'project_string_sources',
+        str(instance.project.project_id),
+        str(instance.source_id),
+        filename
+    )
 
 
 class FileUploadSource(ProjectStringSource):
-    file = models.FileField(upload_to=project_string_source_upload_path)
+    file = models.FileField(upload_to=project_string_source_upload_path, max_length=200)
 
     def save(self, *args, **kwargs):
         self.source_type = 'File Upload'
         super().save(*args, **kwargs)
+
+class UploadedStringFile(models.Model):
+    # file_upload_source = models.ForeignKey(FileUploadSource, related_name='uploaded_files', on_delete=models.CASCADE)
+    file = models.FileField(upload_to=project_string_source_upload_path)
+
+    def __str__(self):
+        return f"File for {self.file_upload_source.project.name}"
